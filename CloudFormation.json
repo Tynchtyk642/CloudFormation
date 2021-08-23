@@ -244,6 +244,28 @@
       }
     },
 
+    "HighMemoryUsage": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+          "AlarmDescription": "Memoryusageishigh",
+          "AlarmName": "HighMemoryUsage",
+          "ComparisonOperator": "GreaterThanThreshold",
+          "EvaluationPeriods": 1,
+          "MetricName": "MemoryUsage",
+          "Namespace": "AWS/EC2",
+          "Period": 60,
+          "Statistic": "Average",
+          "Threshold": 65,
+          "AlarmActions": [ { "Ref": "WebServerScaleUpPolicy" } ],
+          "Dimensions": [
+          {
+            "Name": "AutoScalingGroupName",
+            "Value": { "Ref": "WebServerGroup" }
+          }
+        ]
+          }
+        },
+
     "ApplicationLoadBalancer" : {
       "Type" : "AWS::ElasticLoadBalancingV2::LoadBalancer",
       "Properties" : {
